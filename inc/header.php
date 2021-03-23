@@ -1,5 +1,6 @@
 <?php 
-// session_start(); 
+include("inc/db.php");
+ //session_start(); 
 $user_id = $_SESSION['emp_id']; 
 $id_sql=("SELECT id FROM `employess`WHERE `id`= $user_id");
 $utb = mysqli_query($conn, $id_sql);
@@ -67,7 +68,7 @@ $utb = mysqli_fetch_array($utb);
 .modal-confirm .btn, .modal-confirm .btn:active {
 	color: #fff;
 	border-radius: 4px;
-	background: #eeb711 !important;
+	background: #fa2c2c ;
 	text-decoration: none;
 	transition: all 0.4s;
 	line-height: normal;
@@ -83,6 +84,7 @@ $utb = mysqli_fetch_array($utb);
 }
 
 </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="plugins/toastr/toastr.min.js"></script>
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -97,30 +99,78 @@ $utb = mysqli_fetch_array($utb);
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3" action="lead_table.php" method="post">
-      <div class="input-group input-group-sm">
+<div class="container">
+      <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-12 col-sx-12 ">
+                      <?php
+                      if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 or $dep_id == 11 ) { 
+
+
+                        echo '<form class="form-inline ml-3" action="lead_table.php" method="post">';
+                        echo '   <div class="input-group input-group-sm">';
+                        echo '   <input type="text" placeholder="First/Last Name" class="form-control" name="searchlead" required>
+                              <div class="input-group-append">';
+
+                        echo '<div class="col-sm-2  p-1">
+                                      <input type="hidden" placeholder="Primary/Mobile Number"class="form-control" name="phone">
+                                    </div>';
+
+                                
+                          echo '            <input type="hidden" placeholder="Email"class="form-control"  name="email">';
+                                    
+
+                            
+                          echo '            <input type="hidden" placeholder="Sale Date" class="form-control" name="sal_date">';
+                                
+                              
+                          echo '         <input type="hidden" placeholder="Appointment Date" class="form-control"name="appo_date">';
+                              
+                          echo '     <button class="btn btn-navbar" type="submit" name="search">
+                                  <i class="fas fa-search"></i>
+                                </button>';
+                          echo '   </div>
+                            </div>
+                          </form>';
+                          
+                      
+
+
+                        }
+                          ?>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-12 col-sx-12  ">
+           <?php 
+                  echo '<form class="form-inline ml-3" action="find.php" method="get">';
+                  echo '   <div class="input-group input-group-sm ">';
+                  echo '   <input type="text" placeholder="zipcode" maxlength="5" class="form-control " name="zipcode" required>
+                           <div class="input-group-append">';
+
+                        
+                      
+                    echo '     <button class="btn btn-navbar" type="submit" name="search">
+                            <i class="fas fa-search"></i>
+                          </button>';
+                    echo '   </div>
+                      </div>
+                    </form>';
+           ?>
+            </div>
+            
+       </div>
+</div>
+  
+<!-- <form class="form-inline ml-3" action="lead_table.php" method="post">
+  <div class="input-group input-group-sm " >
       <input type="text" placeholder="First/Last Name" class="form-control" name="searchlead" required>
-        <div class="input-group-append">
-        <div class="col-sm-2  p-1">
-                 <input type="hidden" placeholder="Primary/Mobile Number"class="form-control" name="phone">
-               </div>
-
-           
-                <input type="hidden" placeholder="Email"class="form-control"  name="email">
-               
-
-       
-                <input type="hidden" placeholder="Sale Date" class="form-control" name="sal_date">
-          
-         
-              <input type="hidden" placeholder="Appointment Date" class="form-control"name="appo_date">
-        
-          <button class="btn btn-navbar" type="submit" name="search">
+  <div class="input-group-append">
+    
+   <button class="pl-5 btn btn-navbar" type="submit" name="search">
             <i class="fas fa-search"></i>
           </button>
-        </div>
+     </div>
       </div>
-    </form>
+  </form> -->
+
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -158,7 +208,7 @@ $utb = mysqli_fetch_array($utb);
        
               echo '<li class="nav-item"  >';
               // echo '<a   onclick="WarningFuction()" data-toggle="modal" href="#"  class="nav-link" >';
-              echo '<a    href="#myModal" class="trigger-btn nav-link" data-toggle="modal" >';
+              echo '<a    href="#myModal1" class="trigger-btn nav-link" data-toggle="modal" >';
              
 
                echo '<i class="text-danger fas fa-sign-out-alt"></i>
@@ -210,13 +260,13 @@ $(document).ready(function(){
 }
 </script>
 <script>
-$('#myModal').on('shown.bs.modal', function () {
+$('#myModal1').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
 
 </script>
 <!-- Modal -->
-<div id="myModal" class="modal fade" id="modal-danger">
+<div id="myModal1" class="modal fade" id="modal-danger">
 	<div class="modal-dialog modal-confirm">
 		<div class="modal-content">
 			<div class="modal-header justify-content-center">
@@ -236,8 +286,8 @@ $('#myModal').on('shown.bs.modal', function () {
             
                <div  class="col-1"></div>
                
-               &nbsp;&nbsp;&nbsp;<div class="col-5 " >  <button class="btn btn-warning" data-dismiss="modal">Close</button> </div>
-           <div class="col-5 " ><a href="lockscreen.php" class="btn btn-warning pt-2"  >
+               &nbsp;&nbsp;&nbsp;<div class="col-5 " > <b> <button class="btn btn-warning bg-info" data-dismiss="modal">Close</button></b> </div>
+           <div class="col-5 " ><a href="lockscreen.php" class="btn btn-danger pt-2"  >
                         <i class=" pt-1 text-danger fas fa-sign-out-alt"></i>
                         SignOut
                   </a>

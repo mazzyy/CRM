@@ -148,7 +148,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="./providers.php" class="nav-link">
             <i class="fas fa-concierge-bell"></i>
               <p>
@@ -156,7 +156,7 @@
                
               </p>
             </a>
-          </li>
+          </li> -->
 
 
           <li class="nav-item">

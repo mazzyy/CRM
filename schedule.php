@@ -52,6 +52,7 @@ echo '<script type="text/javascript">
 
   }
   
+  
 </style>
 <body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
