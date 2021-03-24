@@ -2,32 +2,34 @@
 
  include("inc/db.php");
 session_start(); 
- echo $_SESSION['u_id'];    
-echo $_SESSION['u_name'];
+  $_SESSION['u_id'];    
+ $_SESSION['u_name'];
 
 
    //echo '<script>alert("Welcome to Geeks for Geeks")</script>'; 
 $c_id = $_POST['cus_id'];
 
-$c_fname = $_POST['c_fname'];
-    $c_lname = $_POST['c_lname'];
-$c_phone = $_POST['c_phone'];
+$c_fname = trim($_POST['c_fname']);
+    $c_lname = trim($_POST['c_lname']);
+$c_phone = trim($_POST['c_phone']);
 
-    $email = $_POST['email'];
-    $dob = $_POST['dob'];
-$mobile_phone = $_POST['mobile_phone'];
-$street = $_POST['street'];
-        $zip_code = $_POST['zip_code'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $ssn = $_POST['ssn'];
-        $dl = $_POST['dl'];
-        $dl_exp = $_POST['dl_exp'];
-        $dl_state = $_POST['dl_state'];
+    $email = trim($_POST['email']);
+    $dob = trim($_POST['dob']);
+$mobile_phone = trim($_POST['mobile_phone']);
+$street = trim($_POST['street']);
+        $zip_code = trim($_POST['zip_code']);
+        $city = trim($_POST['city']);
+        $state = trim($_POST['state']);
+        $ssn = trim($_POST['ssn']);
+        $dl = trim($_POST['dl']);
+        $dl_exp = trim($_POST['dl_exp']);
+        $dl_state = trim($_POST['dl_state']);
 $lead_sour = $_POST['lead_sour'];
 $Current_pro = $_POST['Current_pro'];
 
-  echo$sql = "INSERT INTO `customer`(`first_name`, `last_name`, `phone`, `alt_num`, `email`, `DOB`, `SSN`, `Driving_license`, `Driving_license_Expired`, `Driving_License_State`, `account`, `street`, `city`, `state`, `zip_code`, `current_provider`, `Lead_Source`) VALUES('$c_fname','$c_lname','$c_phone','$mobile_phone','$email','$dob','$mobile_phone','$street','$zip_code','$city','$state','$ssn','$dl','$dl_exp','$dl_state','$lead_sour','$Current_pro')";
+ $sql = "INSERT INTO `customer`(`first_name`, `last_name`, `phone`, `alt_num`, `email`, `DOB`, `SSN`, `Driving_license`, `Driving_license_Expired`, `Driving_License_State`, `street`, `city`, `state`, `zip_code`, `current_provider`, `Lead_Source`) 
+  VALUES('$c_fname','$c_lname','$c_phone','$mobile_phone','$email','$dob',
+  '$ssn','$dl','$dl_exp','$dl_state','$street','$city','$state','$zip_code','$Current_pro','$lead_sour')";
                     
 if (mysqli_query($conn, $sql)) {
 
@@ -41,7 +43,7 @@ $last_cid = mysqli_insert_id($conn);
 
 
 
-echo"-----==============================================================================================================================================================lllllllleeeeeeeeeeeaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddd=========================================================================================================================================================================================================================================================";
+// echo"-----==============================================================================================================================================================lllllllleeeeeeeeeeeaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddd=========================================================================================================================================================================================================================================================";
 	
 				$Assigned_To = $_POST['Assigned_To'];
 			
@@ -62,13 +64,13 @@ echo"-----======================================================================
 				// ".$GLOBALS['c_id']."			
 
 
- echo $sql = "INSERT INTO lead ( `cu_id`, `u_id`, `Lead_Status`,`Remarks`,`count`) VALUES($last_cid,".$_SESSION['u_id'].",'Active','',1) ;";
+  $sql = "INSERT INTO lead ( `cu_id`, `u_id`, `Lead_Status`,`Remarks`,`count`) VALUES($last_cid,".$_SESSION['u_id'].",'Active','',1) ;";
 										
 if (mysqli_query($conn, $sql)) {
 
 	  $last_id = mysqli_insert_id($conn);
 
-echo  $sql1 ="INSERT INTO orders (`lead_Id`,`Assigned_To`,`Description`) 
+  $sql1 ="INSERT INTO orders (`lead_Id`,`Assigned_To`,`Description`) 
   VALUES('$last_id','$Assigned_To','$Description');";
 
 if (mysqli_query($conn, $sql1)) {
@@ -76,7 +78,7 @@ if (mysqli_query($conn, $sql1)) {
 	 $last_id_order = mysqli_insert_id($conn);
 
 
-echo"-----=======================================================================================================================================================================================================================================================================================================================================================================================================================";
+// echo"-----=======================================================================================================================================================================================================================================================================================================================================================================================================================";
 
  // print_r($multiplefile = $_FILES['multipleFile']['name']);
 
@@ -102,7 +104,7 @@ if (!empty($_FILES['multipleFile']['name'])) {
           $target_dir = 'upload/'.$newFile; 
 
           if (move_uploaded_file($fileTmp, $target_dir)) {
-          echo  $query  = "INSERT INTO `lead_files`(`lead_id`, `files`, `files_types`) VALUES ('$last_id','$newFile', '$type' )";
+            $query  = "INSERT INTO `lead_files`(`lead_id`, `files`, `files_types`) VALUES ('$last_id','$newFile', '$type' )";
             mysqli_query($conn, $query);
           }
         }
@@ -119,18 +121,18 @@ if (!empty($_FILES['multipleFile']['name'])) {
 
 
 
-echo"-----=======================================================================================================================================================================================================================================================================================================================================================================================================================";
+// echo"-----=======================================================================================================================================================================================================================================================================================================================================================================================================================";
 
 
 
 
 // {
- $connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+ $connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 // $order_id = uniqid();provider_unit
  $count = 0; 
   
  // echo $count = count($_POST["provider_unit"]);
-echo "string";
+// echo "string";
    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  //  $service_unit = $_POST["service_unit{$qi}"];
  // print_r($_POST["provider_unit"]);
@@ -163,8 +165,7 @@ while (list ($key, $val) = each ($service_unit)) {
 // echo $qi;
 
  // echo $count;
-
-echo $query = "INSERT INTO `service_offered`(`lead_id`, `order_id`, `provi_name`, `serv_name`, `status`, `sale_date`, `opp_date`, `opp_time`, `account`, `confirmation_num`) 
+ $query = "INSERT INTO `service_offered`(`lead_id`, `order_id`, `provi_name`, `serv_name`, `status`, `sale_date`, `opp_date`, `opp_time`, `account`, `confirmation_num`) 
  VALUES ('".$last_id."','".$last_id_order."','".$_POST["provider_unit"][$count]."','".$val."','".$_POST["status_unit"][$count]."','".$_POST["sale_date"][$count]."','".$_POST["app_date"][$count]."','".$_POST["app_time"][$count]."','".$_POST["account"][$count]."','".$_POST["Confirmation_num"][$count]."')
  ";
 

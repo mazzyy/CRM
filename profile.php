@@ -2,6 +2,7 @@
 
 include("inc/db.php");
 session_start();
+ $dep_id=  $_SESSION['dep_id'];
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +35,7 @@ session_start();
     margin: 0;}
 
 </style>
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>
@@ -104,7 +105,7 @@ session_start();
    $_SESSION['u_name'];
    $_SESSION['emp_id']; 
 
-              if(isset($_GET['empID'])){
+              if(isset($_GET['empID']) ){
 
 
 
@@ -133,7 +134,7 @@ session_start();
                     $img_fetch = $row_depart2['img'];
               }
 
-elseif (isset($_SESSION['emp_id'])) {
+elseif (isset($_SESSION['emp_id']) ) {
  $useridf = $_SESSION['emp_id']; 
 
   $fetch_department = "SELECT employess.id, employess.Title, employess.First_Name, employess.Last_Name,tbl_department.dep_id, tbl_department.name AS department, tbl_designation.des_id, tbl_designation.name AS designation, employess.Dependability, employess.Created_date , employess.img FROM `employess` INNER JOIN tbl_department ON employess.Dep_id = tbl_department.dep_id INNER JOIN tbl_designation ON employess.des_id = tbl_designation.des_id WHERE id = '$useridf'";
@@ -175,9 +176,19 @@ elseif (isset($_SESSION['emp_id'])) {
                 <div class="text-center">
                   <form method="post" id="myForm" enctype="multipart/form-data">
                     <input type="file" name="files" class="custom-file-input" id="imgInp" style="background: rgb();">
-                   <img class="profile-user-img img-fluid img-circle"
-                       src="upload/<?php echo $img_fetch;?>"
-                       alt="User profile picture" id="blah" hight="120" >
+                   
+                          <?php   if($img_fetch){
+                         
+                               echo '<img class="profile-user-img img-fluid img-circle"
+                       src="upload/'.$img_fetch.'"
+                       alt="User profile picture" id="blah" hight="120" >';
+                                              }else{
+                                                 echo '<img class="profile-user-img img-fluid img-circle"
+                        src="upload/user.png"
+                       alt="User profile picture" id="blah" hight="120" >';
+
+                                              }?>
+
 <button type="submit" name="upload" class="btn btn-info btn-lg" style=" float: right;  background-color:#000000!important; border-width:medium "
 >Upload</button>
                 </form>
@@ -204,7 +215,7 @@ move_uploaded_file($tmp_name, $imagefolder.$file);
               }   
               ?>
 
-                <h3 class="profile-username text-center"><?php echo ucfirst($_SESSION['u_name'])  ?></h3>
+                <h3 class="profile-username text-center"><?php echo ucfirst( $fname_fetch)  ?></h3>
       
          <!--       
                 <p class="text-muted text-center"></?php echo ucfirst($designation_fetch); ?></p>
@@ -257,7 +268,7 @@ move_uploaded_file($tmp_name, $imagefolder.$file);
           </div>
           <!-- /.col -->
 
-<?php if(isset($_GET['empID'])){
+<?php if(isset($_GET['empID']) AND $dep_id == 1 or isset($_GET['empID']) AND  $dep_id == 2){
  ?>
 
 
@@ -269,7 +280,7 @@ move_uploaded_file($tmp_name, $imagefolder.$file);
                   
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li> -->
                   
-                  <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Info</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Infoo</a></li>
                   
                   <li class="nav-item"><a class="nav-link" href="#empDetails" data-toggle="tab">Emp Details</a></li>
                   <li class="nav-item"><a class="nav-link" href="#empemergDetails" data-toggle="tab">Emp Emerg Details</a></li>

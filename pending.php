@@ -3,7 +3,7 @@ session_start();
  $user_id = $_SESSION['u_id'];    
  $user_name = $_SESSION['u_name'];
  $dep_id=  $_SESSION['dep_id'];
-if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 ) { 
+if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 or $dep_id == 11 ) { 
 
  }else{
 
@@ -77,27 +77,23 @@ include("inc/sidebar.php");
        
             <?php 
 
-$searchlead = $num = $em = $sd = $ad ="";
 
-            if(isset($_POST['searchlead'])){
+
+            
     
-            $searchlead = mysqli_real_escape_string($conn, htmlspecialchars($_POST['searchlead']));
+            
   // $num = mysqli_real_escape_string($conn, htmlspecialchars($_POST['phone']));
   // $em = mysqli_real_escape_string($conn, htmlspecialchars($_POST['email']));
   // $sd = mysqli_real_escape_string($conn, htmlspecialchars($_POST['sal_date']));
   // $ad = mysqli_real_escape_string($conn, htmlspecialchars($_POST['appo_date']));
 // $sch_query ="SELECT service_offered.lead_id, lead.cu_id, tbl_users.u_name, service_offered.status,service_offered.sale_date,service_offered.opp_date, customer.first_name ,customer.last_name,customer.phone,customer.alt_num FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id WHERE ";
 
- $sch_query="SELECT service_offered.lead_id, lead.cu_id, tbl_users.u_name, service_offered.status,service_offered.sale_date,service_offered.opp_date, customer.first_name ,customer.last_name,customer.phone,customer.alt_num FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id where `status`='' or `phone`='$searchlead' or `alt_num`='$searchlead' or `first_name`='$searchlead' or `last_name`='$searchlead'";
+ $sch_query="SELECT service_offered.lead_id, lead.cu_id, tbl_users.u_name, service_offered.status,service_offered.sale_date,service_offered.opp_date, customer.first_name ,customer.last_name,customer.phone,customer.alt_num FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id where `status`='Pending-Activation' order by service_offered.id";
 
   $sch_result1 = mysqli_query($conn,$sch_query);
      
 
-    
- }
-else {
-  
-}
+ 
 
 
 

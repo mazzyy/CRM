@@ -2,7 +2,7 @@
 
 include("inc/db.php");
 session_start();
-
+ $dep_id=  $_SESSION['dep_id'];
 ?>
 
 <!DOCTYPE html>
@@ -172,7 +172,7 @@ session_start();
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                         
                         echo '<script type="text/javascript">
            window.location = "lead_source.php"

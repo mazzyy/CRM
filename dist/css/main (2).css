@@ -26,61 +26,61 @@
 [ RESTYLE TAG ]*/
 
 * {
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
+  margin: 0px; 
+  padding: 0px; 
+  box-sizing: border-box;
 }
 
 body, html {
-	height: 100%;
-	font-family: Oswald-Regular, sans-serif;
+  height: 100%;
+  font-family: Oswald-Regular, sans-serif;
 }
 
 /*---------------------------------------------*/
 a {
-	font-family: Oswald-Regular;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-	transition: all 0.4s;
-	-webkit-transition: all 0.4s;
+  font-family: Oswald-Regular;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
 a:focus {
-	outline: none !important;
+  outline: none !important;
 }
 
 a:hover {
-	text-decoration: none;
+  text-decoration: none;
   color: #111111;
 }
 
 /*---------------------------------------------*/
 h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
+  margin: 0px;
 }
 
 p {
-	font-family: Oswald-Regular;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
+  font-family: Oswald-Regular;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
 }
 
 ul, li {
-	margin: 0px;
-	list-style-type: none;
+  margin: 0px;
+  list-style-type: none;
 }
 
 
 /*---------------------------------------------*/
 input {
-	outline: none;
-	border: none;
+  outline: none;
+  border: none;
 }
 
 input[type="number"] {
@@ -116,17 +116,17 @@ textarea:-ms-input-placeholder { color: #43383e;}
 
 /*---------------------------------------------*/
 button {
-	outline: none !important;
-	border: none;
-	background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
 }
 
 button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 iframe {
-	border: none !important;
+  border: none !important;
 }
 
 /*//////////////////////////////////////////////////////////////////
@@ -469,17 +469,17 @@ iframe {
   opacity: 1;
 }
 
-@media (max-width: 992px) {
+/*@media (max-width: 992px) {
   .alert-validate::before {
     visibility: visible;
     opacity: 1;
-  }
+  }*/
 }
 
 /*//////////////////////////////////////////////////////////////////
 [ Responsive ]*/
-@media (max-width: 576px) {
+/*@media (max-width: 576px) {
   .wrap-login100 {
     padding-top: 20px
-  }
+  }*/
 }

@@ -4,14 +4,14 @@
 
     $servernames = "localhost";
     $usernames = "root";
-    $passwords = "";
+    $passwords = "QJb4yhZzNG4CwGKJ";
     $dbnames = "crm";
     
     // Create connection
     $conns = mysqli_connect($servernames, $usernames, $passwords, $dbnames);
 //index.php
 $dep_id=  $_SESSION['dep_id'];
-if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 ) { 
+if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 or $dep_id == 11) { 
 
 }else{
 
@@ -45,7 +45,7 @@ echo '<script type="text/javascript">
 <link rel="stylesheet" href="dist/css/adminlte.css">
 
 </head>
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>
@@ -166,7 +166,7 @@ include("inc/sidebar_right.php");
              <?php
               $servername = "localhost";
     $username = "root";
-    $password = "";
+   $password = "QJb4yhZzNG4CwGKJ";
     $dbname = "oss_db";
     
     // Create connection

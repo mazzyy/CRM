@@ -2,6 +2,7 @@
 session_start(); 
   $user_id = $_SESSION['u_id'];    
  $user_name = $_SESSION['u_name'];
+  $dep_id=  $_SESSION['dep_id'];
 
 ?>
 <!DOCTYPE html>

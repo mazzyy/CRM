@@ -2,7 +2,7 @@
 
 include("inc/db.php");
 session_start();
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 function lead_status($connect)
 { 
  $output = '';

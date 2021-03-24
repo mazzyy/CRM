@@ -14,6 +14,20 @@ echo '<script type="text/javascript">
 }
 
 ?>
+<?php
+
+
+if(isset($_POST['Update_user']))
+{
+
+   $userStatus=$_POST['status'];
+   $currentUser=$_POST['user'];
+   $updateUserData=("UPDATE `employess` SET `UserID`= ".$userStatus." WHERE `id` = ".$currentUser."");
+  $conn->query($updateUserData);
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +81,7 @@ body,main,section{
 
 
 </style>
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>
@@ -315,7 +329,7 @@ $abhiu = mysqli_query($conn,$insert_emp);
                   
                   <?php
                     
-$users_query = "SELECT img,employess.id, employess.Title, employess.First_Name, employess.Last_Name,  tbl_department.name AS department, tbl_designation.name AS designation, employess.Created_date FROM `employess`  INNER JOIN tbl_department ON employess.Dep_id = tbl_department.dep_id INNER JOIN tbl_designation ON employess.des_id = tbl_designation.des_id";      
+$users_query = "SELECT img,employess.id,employess.UserID, employess.Title, employess.First_Name, employess.Last_Name,  tbl_department.name AS department, tbl_designation.name AS designation, employess.Created_date FROM `employess`  INNER JOIN tbl_department ON employess.Dep_id = tbl_department.dep_id INNER JOIN tbl_designation ON employess.des_id = tbl_designation.des_id";      
 
 $result = mysqli_query($conn, $users_query);
                                
@@ -331,7 +345,7 @@ if(mysqli_num_rows($result) > 0){
         $department = $row['department'];
         $designation = $row['designation'];
         $Created_date = $row['Created_date'];
-
+        $status = $row['UserID'];
                       
 ?>
                  
@@ -340,22 +354,45 @@ if(mysqli_num_rows($result) > 0){
                     <td><?php echo $user_id; ?></td>
                     <td><?php echo $user_title; ?></td>
                     <td class=" m-0 p-0"><center>
-                          <img class="Regular border border border-dark  img-fluid img-circle w-50 h-50 "       
+                       <!--    <img class="Regular border border border-dark  img-fluid img-circle w-50 h-50 "       
                                 src="upload/<?php echo $user_img;?>"
-                                alt="User profile picture" id="blah" hight="120" >
+                                alt="User profile picture" id="blah" hight="120" > -->
+                                
+                                 <?php   if($user_img){
+                         
+                               echo '<img class="profile-user-img img-fluid img-circle"
+                       src="upload/'.$user_img.'"
+                       alt="User profile picture" id="blah" hight="120" >';
+                                              }else{
+                                                 echo '<img class="profile-user-img img-fluid img-circle"
+                        src="upload/user.png"
+                       alt="User profile picture" id="blah" hight="120" >';
+
+                                              }?>
                         <center>
                     </td>
                     <td><?php echo ucfirst($user_fname) . " " .$user_lname; ?></td>
                     <td><?php echo $department; ?></td>
                     <td><?php echo $designation; ?></td>
-                
-                    <td><span class="badge badge-warning"><?php echo "Active"; ?></span></td>
+                <form method="POST">
+                    <td><span class="badge badge-warning"><?php 
+                            echo  '<select  name="status" >
+                                  <option value="'.$status.'" selected>';if($status==1){echo "Active";}else{echo "Deactive";}
+                            
+                            echo     '</option>
+                                  <option value="1">Active</option>
+                                  <option value="0" >Deactive</option>
+                              </select>'; 
+                    // echo     $status; 
+                    ?></span></td>
                     <td>
                         <a href="profile.php?empID=<?php echo $user_id; ?>" title="Edit" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="profile.php?empID=<?php echo $user_id; ?>" title="Delete" class="btn btn-danger btn-sm">Delete</a>
-                     
+                     <?php echo  '<input type="hidden" name="user" value="'.$user_id.'">'; ?>
+                        <!-- <a href="profile.php?empID=<?php echo $user_id; ?>" title="Delete" class="btn btn-danger btn-sm">Delete</a> -->
+                        <input type="submit" name="Update_user" class="btn btn-danger btn-sm" value="Update">
+                        <!-- <button  name="Update_user" class="btn btn-danger btn-sm" value="true">Update</button> -->
                     </td>
-                    
+                   </form> 
                      </tr>
                      
                      <?php 

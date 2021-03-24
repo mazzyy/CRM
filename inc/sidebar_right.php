@@ -52,12 +52,15 @@
                                 echo '<div style="color:#BDBDBD;" class="pb-1"> Agent</div>';
                                   }
 
-                                if ( $dep_id ==4) {
+                                if ( $dep_id ==4 ) {
                                 echo '<div style="color:#BDBDBD;" class="pb-1"> Back Office</div>';
                                   }
 
                                 if ( $dep_id ==5) {
                                 echo '<div style="color:#BDBDBD;" class="pb-1"> Employee</div>';
+                                  }
+                                   if ( $dep_id ==11) {
+                                echo '<div style="color:#BDBDBD;" class="pb-1"> Supervisor</div>';
                                   }
                                   ?>
                         </a>
@@ -394,7 +397,7 @@
 
 
           <!-- start backoff -->
-          <?php if ( $dep_id ==4) { ?>
+          <?php if ( $dep_id ==4 or $dep_id ==11) { ?>
  <li class="nav-item">
     <center>
             <!-- <a class="nav-link bg-info">
@@ -449,21 +452,6 @@
               </p>
             </a>
           </li>
-            <li class="nav-item">
-            <a href="./fi_cus.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-               Find customer
-               
-              </p>
-            </a>
-          </li>
-           <li class="nav-item">
-                <a href="./new.php" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>Customer</p>
-                </a>
-              </li>
            <li class="nav-item">
             <a href="./profile.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -526,20 +514,6 @@
               </p>
             </a>
           </li>
-            <li class="nav-item">
-            <a href="./fi_cus.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-               Find customer
-               
-              </p>
-            </a>
-          </li> <li class="nav-item">
-                <a href="./new.php" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>Customer</p>
-                </a>
-              </li>
            <li class="nav-item">
             <a href="./profile.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

@@ -43,7 +43,7 @@ session_start();
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
 </head>
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>
@@ -210,7 +210,7 @@ session_start();
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                         
                         echo '<script type="text/javascript">
            window.location = "leadstatus.php"

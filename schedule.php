@@ -52,7 +52,6 @@ echo '<script type="text/javascript">
 
   }
   
-  
 </style>
 <body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
@@ -206,7 +205,7 @@ include("inc/sidebar.php");
             // $lastdate=$row4['date'];
           // echo $lastdate;
 
-          $user = ("SELECT * FROM `employess` "); 
+          $user = ("SELECT * FROM `employess` WHERE `UserID`=1 "); 
           $user = mysqli_query($conn, $user);
 
 
@@ -455,7 +454,7 @@ include("inc/sidebar.php");
           <tbody>";
           
 
-$w=("SELECT * FROM `employess`");
+$w=("SELECT * FROM `employess` WHERE `UserID`=1");
 $r = mysqli_query($conn,$w);
 
 
@@ -471,7 +470,7 @@ $totalHoursQ = mysqli_query($conn, $totalHoursQuery);
                
 $tthr = mysqli_fetch_array($totalHoursQ);
             echo "<tr >
-              <td style=' padding-top:20%;' class='pt-4 ' ><br><br><br><br><b>$tthr[0]</td>
+              <td style=' padding-top:20%;' class='pt-4 ' ><br><br><br><b>$tthr[0]</td>
             </tr>";
 
            
@@ -509,7 +508,7 @@ $tthr = mysqli_fetch_array($totalHoursQ);
       echo   '<input type="hidden" name="id" class="form-control" id="id" value="$m"aria-describedby="emailHelp" >';
       echo   '<input type="hidden" name="btn-fetch" class="form-control"  value="$m"aria-describedby="emailHelp" >';
 
-      echo '<h1 id="testing" ></h1>';
+      // echo '<h1 id="testing" sctyle="position: unset;font-size: 39px;" ></h1>';
 
       echo " <select name='status' class=' form-control up_provider_uni'>
                   <option selected value=''>--Select Status--</option>

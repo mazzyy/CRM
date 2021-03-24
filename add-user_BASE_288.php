@@ -195,7 +195,7 @@ session_start();
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                       
 
                     }
@@ -222,7 +222,7 @@ session_start();
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                         
                         echo '<script type="text/javascript">
            window.location = "add-user.php"

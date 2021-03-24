@@ -3,7 +3,7 @@ session_start();
   $user_id = $_SESSION['u_id'];    
   $user_name = $_SESSION['u_name'];
  $dep_id=  $_SESSION['dep_id'];
-if ( $dep_id == 1 or $dep_id == 4  ) { 
+if ( $dep_id == 1 or $dep_id == 4 or $dep_id == 11 ) { 
 
  }else{
 
@@ -31,7 +31,7 @@ if ( $dep_id == 1 or $dep_id == 4  ) {
    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.css">
 </head>
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>
@@ -125,7 +125,7 @@ include("inc/sidebar.php");
                 </div> -->
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" id="user_details">
+              <div class="card-body table-responsive p-0" id="user_det">
                 
 
 
@@ -407,7 +407,8 @@ echo'
  
 
  ?>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  
  <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -421,10 +422,7 @@ echo'
 <script>
 $(document).ready(function(){
   
-    fetch_user();
-  setInterval(function(){
-    fetch_user();
-  }, 2000);
+   
 
   function fetch_user()
   {
@@ -432,10 +430,15 @@ $(document).ready(function(){
       url:"back_ajax.php",
       method:"POST",
       success:function(data){
-        $('#user_details').html(data);
+        $('#user_det').html(data);
+        console.log(data);
       }
     })
   }
+   fetch_user();
+  setInterval(function(){
+    fetch_user();
+  }, 2000);
 
 });
 

@@ -1,6 +1,6 @@
 <?php
 
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 
 if (isset($_GET["id"]))
    {

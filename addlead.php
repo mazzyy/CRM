@@ -3,16 +3,17 @@
 
     $servername = "localhost";
     $username = "root";
-    $password = "";
+   $password = "QJb4yhZzNG4CwGKJ";
     $dbname = "crm";
     
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 //index.php
 $dep_id=  $_SESSION['dep_id'];
-if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 ) { 
+if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 or $dep_id == 11) { 
 
-}else{
+}
+else{
 
 echo '<script type="text/javascript">
       window.location.assign("500.html")
@@ -20,7 +21,12 @@ echo '<script type="text/javascript">
 </script> ';
 }
 
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+
+
+
+
+
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 function providers($connect)
 { 
  $output = '';
@@ -41,6 +47,7 @@ function service($connect)
  $statement = $connect->prepare($query);
  $statement->execute();
  $result = $statement->fetchAll();
+ // echo '<option value="none">none</option>';
  foreach($result as $row)
  {
   $output .= '<option value="'.$row["name"].'">'.$row["name"].'</option>';
@@ -277,25 +284,25 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
 
         <div class="col-sm-6">
           <div class="form-group">
-          <label for="clientName" >First Name</label>
+          <label for="clientName" >First Name</label><span style="color: red;">*</span>
           
            
-            <input type="text" class="form-control "  name="c_fname" value="<?php if(isset($c_fname)){ echo $c_fname ;} ?>"  />
+            <input type="text" class="form-control" tabindex="1"  name="c_fname" value="<?php if(isset($c_fname)){ echo $c_fname ;} ?>"  />
           
          <!--/form-group-->
         </div>
 
           <div class="form-group">
-         <label for="clientContact">Primary Phone</label>
+         <label for="clientContact">Primary Phone</label><span style="color: red;">*</span>
           
-        <input type="text" class="form-control " id="clientContact" name="c_phone" value="<?php if(isset($c_phone)){echo $c_phone;}  ?>"  />
+        <input type="text" class="form-control " tabindex="3"id="clientContact" name="c_phone" value="<?php if(isset($c_phone)){echo $c_phone;}  ?>"  />
           
         </div>
         <div class="form-group">
-          <label for="clientName" >Primary Email</label>
+          <label for="clientName" >Primary Email</label><span style="color: red;">*</span>
           
           
-            <input type="text" class="form-control "  name="email" value="<?php if(isset($c_email)){echo $c_email;}  ?>"  />
+            <input type="text" class="form-control " tabindex="5" name="email" value="<?php if(isset($c_email)){echo $c_email;}  ?>"  />
           
          <!--/form-group-->
         </div>
@@ -304,22 +311,22 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
       <div class="col-sm-6">
           <div class="form-group">
 
-         <label for="orderDate" >Last Name</label>
+         <label for="orderDate" >Last Name</label><span style="color: red;">*</span>
          
              
-            <input type="text" class="form-control " id="orderDate" name="c_lname"  value="<?php if(isset($c_lname)){echo $c_lname;}  ?>"  />
+            <input type="text" class="form-control" tabindex="2" id="orderDate" name="c_lname"  value="<?php if(isset($c_lname)){echo $c_lname;}  ?> "  />
           
         </div>
          <!--/form-group-->
        <div class="form-group">
-                            <label>Mobile Phone</label><span style="color: red;">*</span>
-                            <input type="text" name="mobile_phone" class="form-control" value="<?php if(isset($c_altnum)){echo $c_altnum;}  ?>"  />
+                            <label>Mobile Phone</label>
+                            <input type="text" name="mobile_phone" tabindex="4" class="form-control" value="<?php if(isset($c_altnum)){echo $c_altnum;}  ?>"  />
                         </div>
           <div class="form-group">
-          <label for="clientName">Date Of Birth</label>
+          <label for="clientName">Date Of Birth</label><span style="color: red;">*</span>
           
           
-            <input type="text" class="form-control "  name="dob" value="<?php if(isset($c_dob)){echo $c_dob;}  ?>"  />
+            <input type="text" class="form-control " tabindex="6" name="dob" value="<?php if(isset($c_dob)){echo $c_dob;}  ?>"  />
           
          <!--/form-group-->
         </div>
@@ -329,14 +336,14 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
       <div class="col-md-6">
                           
                         <div class="form-group">
-                            <label>SSN</label><span style="color: red;">*</span>
-                            <input type="text" name="ssn" value="<?php if(isset($c_ssn)){echo $c_ssn;}  ?>" class="form-control " />
+                            <label>SSN</label>
+                            <input type="text" name="ssn" tabindex="7" value="<?php if(isset($c_ssn)){echo $c_ssn;}  ?>" class="form-control " />
                         </div>
                           </div>
                             <div class="col-md-6">
                         <div class="form-group">
                             <label>Driving Licence</label><span style="color: red;"></span>
-                            <input type="text" class="form-control " value="<?php if(isset($DL)){echo $DL;}  ?>" name="dl"   />
+                            <input type="text" class="form-control" tabindex="8" value="<?php if(isset($DL)){echo $DL;}  ?>" name="dl"   />
                         </div>
                   
     
@@ -344,48 +351,41 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
       <div class="col-md-6">
                           
  <div class="form-group">
-                            <label>Driving License Expired</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control " value="<?php if(isset($DLE)){echo $DLE;}  ?>" name="dl_exp"  />
+                            <label>Driving License Expired</label>
+                            <input type="text" class="form-control" tabindex="9" value="<?php if(isset($DLE)){echo $DLE;}  ?>" name="dl_exp"  />
                         </div>
 
                         <div class="form-group">
-                            <label>Street</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control " value="<?php if(isset($c_strt)){echo $c_strt;}  ?>" name="street"  />
+                            <label>Street</label>
+                            <input type="text" class="form-control" tabindex="11" value="<?php if(isset($c_strt)){echo $c_strt;}  ?>" name="street"  />
                         </div>
                           
                         <div class="form-group">
-                            <label>City</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control " value="<?php if(isset($c_city)){echo $c_city;}  ?>" name="city"   />
+                            <label>City</label>
+                            <input type="text" class="form-control" tabindex="13" value="<?php if(isset($c_city)){echo $c_city;}  ?>" name="city"   />
                         </div>
-                  <div class="form-group">
-                            <label>Current provider</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control " value="<?php if(isset($c_cu_pro)){echo $c_cu_pro;}  ?>" name="p"   />
-                        </div>
+                  
     
                       </div>
                       
                       
                       <div class="col-md-6">
                           <div class="form-group">
-                            <label>Driving License State</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control " value="<?php if(isset($DLS)){echo $DLS;}  ?>" name="dl_state"  />
+                            <label>Driving License State</label>
+                            <input type="text" class="form-control" tabindex="10" value="<?php if(isset($DLS)){echo $DLS;}  ?>" name="dl_state"  />
                         </div>
                         <div class="form-group">
-                            <label>Zip Code</label><span style="color: red;">*</span>
-                            <input type="text" name="zip_code" value="<?php if(isset($c_zip)){echo $c_zip;}  ?>" class="form-control "  />
+                            <label>Zip Code</label>
+                            <input type="text" name="zip_code" tabindex="12"  value="<?php if(isset($c_zip)){echo $c_zip;}  ?>" class="form-control "  />
                         </div>
                           
                         <div class="form-group">
-                            <label>State</label><span style="color: red;">*</span>
-                            <input type="text" name="state" value="<?php if(isset($c_state)){echo $c_state;}  ?>" class="form-control "  />
+                            <label>State</label>
+                            <input type="text" name="state" tabindex="14"  value="<?php if(isset($c_state)){echo $c_state;}  ?>" class="form-control "  />
                             <input type="hidden" class="form-control "  name="cus_id" value="<?php  echo $c_id ;?>"/>
                         </div>
                              
-                        <div class="form-group">
-                            <label>Lead Source</label><span style="color: red;">*</span>
-                            <input type="text" name="p" value="<?php if(isset($c_led_scr)){echo $c_led_scr;}  ?>" class="form-control "  />
-                            <input type="hidden" class="form-control "  name="cus_id" value="<?php  echo $c_id ;?>"/>
-                        </div>
+                       
                       </div>
                       
 </div>
@@ -477,10 +477,17 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
 
           </div>
          
-           <div class="col-4"><div class="form-group">
+          <div class="col-4"><div class="form-group">
            
                       <label for="clientName">Assigned To</label>
-                      <input type="text" class="form-control" value="" name="Assigned_To"  />
+                      <select class="form-control" name="Assigned_To"  >
+                    <option value="<?php echo$u_namse;?>"><?php echo$u_namse;  ?></option>
+                   <option value="Jason">Jason</option>
+                   <option value="Jason">Jared</option>
+                    <option value="Jason">Fahad</option>
+                     <option value="Jason">Feeha</option>
+                  </select>
+                      
                  
                   </div> 
                 </div>
@@ -526,8 +533,8 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
               <div class="card-body">
            <div class="row">
 
-            <div class="col-3"> Offer Provider </div>
-          <div class="col-3">Offer Service </div>
+            <div class="col-3">Service Providers Sold </div>
+          <div class="col-3">Product Sold</div>
            <div class="col-3"> Status </div>
             <div class="col-3"> Sale Date </div>
            </div>
@@ -538,9 +545,9 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
         <select name="provider_unit[]" class="form-control provider_unit"><option value="None">None</option><?php echo providers($connect); ?></select></div>
 
 
-       <div class="col-3"><select name="service_unit1[]" class="select2 form-control service_unit" multiple="multiple" data-placeholder="Select a service_unit" style="width: 100%;"><option value="None">None</option><?php echo service($connect); ?></select></div>
+       <div class="col-3"><select name="service_unit1[]" class="select2 form-control service_unit" multiple="multiple" data-placeholder="Select a service_unit" style="width: 100%;"><option value="None" selected>None</option><?php echo service($connect); ?></select></div>
 
-        <div class="col-3"><select name="status_unit[]" class="form-control status_unit"><option value="">Select Unit</option><?php echo lead_status($connect); ?></select></div>
+        <div class="col-3"><select name="status_unit[]" class="form-control status_unit"><option value="">Select Status</option><?php echo lead_status($connect); ?></select></div>
 
         <div class="col-3"><input type="date" name="sale_date[]" class="form-control sale_date" /></div>
 
@@ -559,7 +566,7 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
           <div class="col-3"><input type="date" name="app_date[]" class="form-control app_date" /></div>
                
            
-          <div class="col-3"><input type="time" name="app_time[]" class="form-control app_time" /></div>
+          <div class="col-3"><input type="text" name="app_time[]" class="form-control app_time" /></div>
              
              
           <div class="col-3"><input type="text" name="account[]" class="form-control account" /></div>
@@ -860,7 +867,7 @@ html += '<div class="card card-warning">';
           html += '<div class="col-3"><input type="date" name="app_date[]" class="form-control app_date" /></div>';
                
             // Appointment Time
-          html += '<div class="col-3"><input type="time" name="app_time[]" class="form-control app_time" /></div>';
+          html += '<div class="col-3"><input type="text" name="app_time[]" class="form-control app_time" /></div>';
              
              //Account Number
           html += '<div class="col-3"><input type="text" name="account[]" class="form-control account" /></div>';
@@ -1017,13 +1024,13 @@ var error = '';
        count = count + 1;
       });
 
-       var $form = $(this);
+       //var $form = $(this);
  //var $inputs = $form.find("input, select, button, textarea");
-var serializedData = new FormData(this)
+var serializedData = new FormData(this);
 
       // var serializedData = $form.serialize();
        // $inputs.prop("disabled", true);
-       alert(serializedData)
+       //alert(serializedData)
       if(error == '')
       {
         //$inputs.prop("disabled", true);
@@ -1034,10 +1041,12 @@ var serializedData = new FormData(this)
        data:serializedData,
         success:function(data)
         {
-          console.log(data)
-         
-        toastr.options.onHidden = function() { window.locationlocation.reload() }
-        toastr.success("Order Added Successfully ...")
+          //console.log(data)
+         // toastr.options.hideDuration:1000 = function() { window.location.assign('addlead.php') }
+        //console.log(data);
+        
+        window.location.assign('leadlist.php?w=1')
+        
         //console.log(data);
 
         },
@@ -1092,24 +1101,24 @@ var serializedData = new FormData(this)
 
 
  
-document.onkeypress = function (event) {  
-event = (event || window.event);  
-if (event.keyCode == 13) {  
-return false;  
-}  
-}  
-document.onmousedown = function (event) {  
-event = (event || window.event);  
-if (event.keyCode == 13) {  
-return false;  
-}  
-}  
-document.onkeydown = function (event) {  
-event = (event || window.event);  
-if (event.keyCode == 13) {  
-return false;  
-}  
-}  
+// document.onkeypress = function (event) {  
+// event = (event || window.event);  
+// if (event.keyCode == 13) {  
+// return false;  
+// }  
+// }  
+// document.onmousedown = function (event) {  
+// event = (event || window.event);  
+// if (event.keyCode == 13) {  
+// return false;  
+// }  
+// }  
+// document.onkeydown = function (event) {  
+// event = (event || window.event);  
+// if (event.keyCode == 13) {  
+// return false;  
+// }  
+// }  
 
   document.onreadystatechange = function() { 
 

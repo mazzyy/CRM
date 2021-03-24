@@ -2,6 +2,7 @@
 
 include("inc/db.php");
 session_start();
+ $dep_id=  $_SESSION['dep_id'];
 
 ?>
 
@@ -49,7 +50,7 @@ session_start();
      margin: 1px 0px 0px -41px;
 }
 </style>
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>
@@ -161,7 +162,7 @@ session_start();
                         
                         <?php 
                                                                         
-                        $role = "SELECT * FROM `employess`";
+                        $role = "select employess.* from employess where `First_Name` NOT IN (select `u_name` from tbl_users)";
                         $role_result = mysqli_query($conn, $role);
 
                         while($data = mysqli_fetch_array($role_result)){
@@ -245,7 +246,7 @@ $emp_name = trim($new_data[1]);
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                       
 
                     }
@@ -272,7 +273,7 @@ $emp_name = trim($new_data[1]);
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                         
                         echo '<script type="text/javascript">
            window.location = "add-user.php"

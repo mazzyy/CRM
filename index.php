@@ -35,15 +35,30 @@ session_start();
 </head>
 <style>
   body{
-    height:100;
-   background: linear-gradient(rgb(1 51 86 / 99%), rgb(5 162 228 / 0%));
+  
+    background-image: url(dist/img/backg.jpg)!important;
+background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+background-attachment: fixed;
   }
 .qwerty{
-  height:100%;
-   
- 
+  height: 100vh;
+    
+ background: linear-gradient(#00477bd4,rgb(0 173 238 / 68%));
+  
+  background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 
-    background: linear-gradient(rgb(0 71 123 / 99%), rgb(0 173 238 / 74%)), url(inc/background.png)!important
+
+
+@media (max-width: 640px) {
+.qwerty{
+  height: auto;
+}
 }
 button{
 
@@ -88,7 +103,7 @@ button:hover{
   }
 }
  </style>
-<body class="hold-transition">
+<body >
   <div class="container-fluid qwerty" >
   <!-- /.login-logo -->
   <!-- <div class="card card-outline card-primary" >
@@ -148,14 +163,19 @@ button:hover{
       /.social-auth-links -->
 
 
-   
+   <div class="row">
+    <div class="col-md-6 col-sm-6 ">
       <div class="wrap-login100 p-t-90 p-b-100">
+
         <div class="login100-pic js-tilt" data-tilt>
           <img src="dist/img/Untitled-5.png" class="rotate" alt="IMG">
            <img src="dist /img/Untitled-4.png" class="pading" alt="IMG">
             <div class="shadows">
             </div>
         </div>
+</div>
+</div>
+  <div class="col-md-6 col-sm-6 ">
 
         <form class=" p-t-110 login100-form validate-form" method="post">
           
@@ -164,10 +184,8 @@ button:hover{
             <span class="focus-input100"></span>
           </div>
 
-          <div class="wrap-input100 validate-input m-b-20" data-validate = "Please enter password">
-            <span class="btn-show-pass">
-              <i class="fa fa fa-eye"></i>
-            </span>
+          <div class=" validate-input m-b-20" data-validate = "Please enter password">
+            
             <input class="input100" type="password" name="password" placeholder="Password">
             <span class="focus-input100"></span>
           </div>
@@ -178,8 +196,9 @@ button:hover{
             </button>
           </div>
 </form>
-</div>
 
+
+ </div>
 
       <?php
 
@@ -190,41 +209,41 @@ button:hover{
         
         
         if($username && $password){
-		$query = mysqli_query($conn, "select employess.Dep_id,employess.img ,u_id,emp_id,u_name,u_pass,des_id from tbl_users INNER JOIN employess ON tbl_users.emp_id = employess.id where u_name ='$username'");
-		$numrow = mysqli_num_rows($query);
-		if($numrow !=0){
-			while($row = mysqli_fetch_assoc($query)){
+    $query = mysqli_query($conn, "select employess.Dep_id,employess.img ,u_id,emp_id,u_name,u_pass,des_id from tbl_users INNER JOIN employess ON tbl_users.emp_id = employess.id where u_name ='$username'");
+    $numrow = mysqli_num_rows($query);
+    if($numrow !=0){
+      while($row = mysqli_fetch_assoc($query)){
                 
-				$db_userid = $row['u_id'];
+        $db_userid = $row['u_id'];
         $db_username = $row['u_name'];
-				$db_password = $row['u_pass'];
+        $db_password = $row['u_pass'];
         $db_role = $row['des_id'];
         $dep_id = $row['Dep_id'];
         $db_emp_id = $row['emp_id'];
         $img = $row['img'];
-			}
+      }
             if($username == $db_username && $password == $db_password)
             {
               $_SESSION['u_id']= $db_userid;    
               $_SESSION['u_name']= $db_username;
-				      $_SESSION['des_id']= $db_role;
+              $_SESSION['des_id']= $db_role;
               $_SESSION['emp_id']= $db_emp_id;
               $_SESSION['dep_id']= $dep_id;
               $_SESSION['img']= $img;
                 echo '<script type="text/javascript">
-  				 	swal("", "Login Successfully", "success");
+            swal("", "Login Successfully", "success");
              </script>';
              
              echo "<script>window.location.assign('time.php')</script>";
                
 
           //       if($db_role == "agent"){
-					
-          //           	echo '<script type="text/javascript">
-  				// 	swal("", "Login Agent", "success");
-  				// 	</script>';
-					
-					// echo "<script>window.location.assign('dashboard.php')</script>";
+          
+          //            echo '<script type="text/javascript">
+          //  swal("", "Login Agent", "success");
+          //  </script>';
+          
+          // echo "<script>window.location.assign('dashboard.php')</script>";
                     
                     
           //     }
@@ -238,8 +257,8 @@ button:hover{
                 
             }
             else{
-				        echo "<script>alert('incorrect username and password')</script>";
-			      }
+                echo "<script>alert('incorrect username and password')</script>";
+            }
     }
             else{
                 echo "<script>alert('user not exists')</script>";

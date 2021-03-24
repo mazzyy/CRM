@@ -99,7 +99,9 @@ $utb = mysqli_fetch_array($utb);
     </ul>
 
     <!-- SEARCH FORM -->
-<div class="container">
+
+
+    <div class="container">
       <div class="row">
             <div class="col-md-6 col-lg-6 col-sm-12 col-sx-12 ">
                       <?php
@@ -108,7 +110,7 @@ $utb = mysqli_fetch_array($utb);
 
                         echo '<form class="form-inline ml-3" action="lead_table.php" method="post">';
                         echo '   <div class="input-group input-group-sm">';
-                        echo '   <input type="text" placeholder="First/Last Name" class="form-control" name="searchlead" required>
+                        echo '   <input type="text" placeholder="Search" class="form-control" name="searchlead" required>
                               <div class="input-group-append">';
 
                         echo '<div class="col-sm-2  p-1">
@@ -135,7 +137,7 @@ $utb = mysqli_fetch_array($utb);
                       
 
 
-                        }
+                        
                           ?>
             </div>
             <div class="col-md-6 col-lg-6 col-sm-12 col-sx-12  ">
@@ -153,24 +155,13 @@ $utb = mysqli_fetch_array($utb);
                     echo '   </div>
                       </div>
                     </form>';
+                      }
            ?>
             </div>
             
        </div>
 </div>
-  
-<!-- <form class="form-inline ml-3" action="lead_table.php" method="post">
-  <div class="input-group input-group-sm " >
-      <input type="text" placeholder="First/Last Name" class="form-control" name="searchlead" required>
-  <div class="input-group-append">
     
-   <button class="pl-5 btn btn-navbar" type="submit" name="search">
-            <i class="fas fa-search"></i>
-          </button>
-     </div>
-      </div>
-  </form> -->
-
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -182,7 +173,7 @@ $utb = mysqli_fetch_array($utb);
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header">Notifications</span>
           <div id="user_details">
           </div>
 

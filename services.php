@@ -181,7 +181,7 @@ $dep_id=  $_SESSION['dep_id'];
                                 </script>';
                       
                       $username = "";
-                      $password = "";
+                     $password = "QJb4yhZzNG4CwGKJ";
                         
                         echo '<script type="text/javascript">
            window.location = "services.php"

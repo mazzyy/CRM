@@ -28,12 +28,20 @@
                                 $usertable = mysqli_query($conn,  $sql);
                                 $row = mysqli_fetch_array($usertable);
                                 $userImage = $row['0'];
-                              
-                                ?>
-                                <img class=" border border-info Regular shadow img-fluid img-circle  "
+                              if($userImage){
+                         
+                               echo '<img class=" border border-info Regular shadow img-fluid img-circle  "
                                           style="width:6ch !important;height:6ch !important;border-width: medium !important; margin-bottom:45%!important" 
-                                                src="upload/<?php echo  $userImage;?>"
-                                                alt="User profile picture"  hight="120" >
+                                                src="upload/'.$userImage.'"
+                                                alt="User profile picture"  hight="120" >';
+                                              }else{
+    echo '<img class=" border border-info Regular shadow img-fluid img-circle  "
+                                          style="width:6ch !important;height:6ch !important;border-width: medium !important; margin-bottom:45%!important" 
+                                                src="upload/user.png"
+                                                alt="User profile picture"  hight="120" >';
+
+                                              }
+                                                       ?>
                                 
                                 <div class="info">
                                 <a href="profile.php " class="d-block" style=" color: white;"><?php            
@@ -58,6 +66,9 @@
 
                                 if ( $dep_id ==5) {
                                 echo '<div style="color:#BDBDBD;" class="pb-1"> Employee</div>';
+                                  }
+                                   if ( $dep_id ==11) {
+                                echo '<div style="color:#BDBDBD;" class="pb-1"> Supervisor</div>';
                                   }
                                   ?>
                         </a>
@@ -124,6 +135,17 @@
                   <p>Providers</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                          <a href="./providers.php" class="nav-link">
+                          <i class="fas fa-concierge-bell"></i>
+                            <p>
+                            Service Providers
+                             
+                            </p>
+                          </a>
+                  </li>
+
               <li class="nav-item">
                 <a href="./services.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -148,7 +170,7 @@
               </p>
             </a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a href="./providers.php" class="nav-link">
             <i class="fas fa-concierge-bell"></i>
               <p>
@@ -156,7 +178,8 @@
                
               </p>
             </a>
-          </li> -->
+          </li>
+
 
 
           <li class="nav-item">
@@ -178,7 +201,7 @@
             </a>
           </li>
            <li class="nav-item">
-            <a href="./lead_table.php" class="nav-link">
+            <a href="./leadlist.php" class="nav-link">
               <i class="fas fa-list-ol"></i>
               <p>  <span class="right badge badge-danger">New</span>
                 Lead list
@@ -186,12 +209,21 @@
               </p>
             </a>
           </li>
-  <li class="nav-item">
+ <!--  <li class="nav-item">
             <a href="./oldlead_view.php" class="nav-link">
             <i class="fas fa-clipboard"></i>
               <p>  <span class="right badge badge-warning">old</span>
                 OLD Lead list
                 
+              </p>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a href="./pending.php" class="nav-link">
+            <i class="fas fa-concierge-bell"></i>
+              <p>
+              Pending Activation 
+               
               </p>
             </a>
           </li>
@@ -363,7 +395,7 @@
           </li>
 
 <li class="nav-item">
-            <a href="./payroll2.php" class="nav-link">
+            <a href="./payroll.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                payroll
@@ -394,7 +426,7 @@
 
 
           <!-- start backoff -->
-          <?php if ( $dep_id ==4) { ?>
+          <?php if ( $dep_id ==4 or $dep_id ==11 ) { ?>
  <li class="nav-item">
     <center>
             <!-- <a class="nav-link bg-info">
@@ -431,16 +463,25 @@
               </p>
             </a>
           </li>
+         <!--  <li class="nav-item">
+            <a href="./providers.php" class="nav-link">
+            <i class="fas fa-concierge-bell"></i>
+              <p>
+              Service Providers
+               
+              </p>
+            </a>
+          </li> -->
            <li class="nav-item">
-            <a href="./lead_table.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="./leadlist.php" class="nav-link">
+              <i class="fas fa-list-ol"></i>
               <p>  <span class="right badge badge-danger">New</span>
                 Lead list
                 
               </p>
             </a>
           </li>
-  <li class="nav-item">
+<!--   <li class="nav-item">
             <a href="./oldlead_view.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>  <span class="right badge badge-warning">old</span>
@@ -448,22 +489,16 @@
                 
               </p>
             </a>
-          </li>
-            <li class="nav-item">
-            <a href="./fi_cus.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+          </li> -->
+           <li class="nav-item">
+            <a href="./pending.php" class="nav-link">
+            <i class="fas fa-concierge-bell"></i>
               <p>
-               Find customer
+              Pending Activation 
                
               </p>
             </a>
           </li>
-           <li class="nav-item">
-                <a href="./new.php" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>Customer</p>
-                </a>
-              </li>
            <li class="nav-item">
             <a href="./profile.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -508,7 +543,7 @@
               </p>
             </a>
           </li>
-           <li class="nav-item">
+         <!--   <li class="nav-item">
             <a href="./lead_table.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>  <span class="right badge badge-danger">New</span>
@@ -516,8 +551,8 @@
                 
               </p>
             </a>
-          </li>
-  <li class="nav-item">
+          </li> -->
+<!--   <li class="nav-item">
             <a href="./oldlead_view.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>  <span class="right badge badge-warning">old</span>
@@ -525,21 +560,16 @@
                 
               </p>
             </a>
-          </li>
-            <li class="nav-item">
-            <a href="./fi_cus.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+          </li> -->
+          <li class="nav-item">
+            <a href="./providers.php" class="nav-link">
+            <i class="fas fa-concierge-bell"></i>
               <p>
-               Find customer
+              Service Providers
                
               </p>
             </a>
-          </li> <li class="nav-item">
-                <a href="./new.php" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>Customer</p>
-                </a>
-              </li>
+          </li>
            <li class="nav-item">
             <a href="./profile.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -555,8 +585,16 @@
           </li>
           <?php  }?>
 
-          
-
+         <?php if ( $dep_id ==5) { ?> 
+           <li class="nav-item">
+                          <a href="./time.php" class="nav-link">
+                              <i class="nav-icon fas fa-th"></i>
+                              <p>
+                              Time
+                              </p>
+                          </a>
+                        </li>
+           <?php  }?>              
         <!--   <li class="nav-item">
             <a href="./leadstatus.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

@@ -15,7 +15,7 @@ session_start();
   </script> ';
    }
   
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 function lead_status($connect)
 { 
  $output = '';
@@ -65,7 +65,7 @@ function providers($connect)
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 
-<body onload="myFunction()"  class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body   class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="loader">
   <div class="body">
    <span>

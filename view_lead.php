@@ -1,18 +1,21 @@
 <?php include("inc/db.php");
 session_start(); 
 
+
   $servername = "localhost";
     $username = "root";
-    $password = "";
+   $password = "QJb4yhZzNG4CwGKJ";
     $dbname = "crm";
     
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 //index.php
+ $user_id = $_SESSION['u_id'];    
+ $user_name = $_SESSION['u_name'];
+ $dep_id=  $_SESSION['dep_id'];
 
 
-
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 function providers($connect)
 { 
  $output = '';
@@ -60,7 +63,13 @@ $queryjoin = mysqli_query($conn, $queryjoin);
       ( $leadUser = $queryjoin[0]);
       ( $leadId = $queryjoin[1]);
  
+// if ( $leadUser == $user_name ) { 
+// echo '<script type="text/javascript">
+//       var $inputs = $form.find("input, select, button, textarea");
+//       $inputs.prop("disabled", fales);
+// </script> ';
 
+// }
 ?>
 
 <!DOCTYPE html>
@@ -150,6 +159,7 @@ include("inc/sidebar.php");
 </div>
             <div class="row ">
           <div class="col-lg-12">
+           <form method="POST"   id="submitw">
 <div class="card bg-gradient-gray ">
               <div class="card-header"style="background-color:#2a3f54!important;color:white">
                 <h3 class="card-title">Customer Detail</h3> 
@@ -183,10 +193,10 @@ $lead_get_id = $_GET['leadid'];
 if( $idf= mysqli_query($conn, $q)){
 
        $ids_u  = mysqli_fetch_array($idf);
-      $cus_get_id = $ids_u['1'];
+       $cus_get_id = $ids_u['1'];
 
-
- $sql2 = "SELECT `id`, `des_id`, `first_name`, `last_name`, `phone`, `alt_num`, `email`, `DOB`, `SSN`, `Driving_license`,`Driving_license_Expired`,`Driving_License_State`, `street`, `city`, `state`, `zip_code`,`Date` FROM `customer` WHERE `id` = $cus_get_id ";
+         
+  $sql2 = "SELECT `id`, `des_id`, `first_name`, `last_name`, `phone`, `alt_num`, `email`, `DOB`, `SSN`, `Driving_license`, `Driving_license_Expired`, `Driving_License_State`, `street`, `city`, `state`, `zip_code`, `current_provider`, `Lead_Source`, `Date` FROM `customer` WHERE `id` = $cus_get_id ";
 
         
 
@@ -194,7 +204,7 @@ if( $idf= mysqli_query($conn, $q)){
 $id_u = mysqli_query($conn, $sql2);
 
        $ids_u  = mysqli_fetch_array($id_u);
-      $c_id = $ids_u[0];
+       $c_id = $ids_u[0];
 
          // $GLOBALS['c_id'] = $c_id;
             $u_ids = $ids_u[1];
@@ -212,6 +222,8 @@ $id_u = mysqli_query($conn, $sql2);
             $c_city = $ids_u[13];
             $c_state = $ids_u[14];
             $c_zip = $ids_u[15];
+ $curr_pro = $ids_u[16];
+              $led_sc = $ids_u[17];
 
           function getTruncatedCCNumber($c_ssn){
         return str_replace(range(0,9), "*", substr($c_ssn, 0, -4)) .  substr($c_ssn, -4);
@@ -263,7 +275,7 @@ if( $or_id= mysqli_query($conn, $q2)){
           <label for="clientName" >First Name</label>
           
            
-            <input type="text" class="form-control"  name="clientName" value="<?php if(isset($c_fname)){ echo $c_fname ;} ?>" disabled />
+            <input type="text" class="form-control"  tabindex="1"name="c_fname" value="<?php if(isset($c_fname)){ echo $c_fname ;} ?>"  />
           
          <!--/form-group-->
         </div>
@@ -271,14 +283,14 @@ if( $or_id= mysqli_query($conn, $q2)){
           <div class="form-group">
          <label for="clientContact">Primary Phone</label>
           
-        <input type="text" class="form-control" id="clientContact" name="clientContact" value="<?php if(isset($c_phone)){echo $c_phone;}  ?>" disabled />
+        <input type="text" class="form-control " tabindex="3"id="clientContact" name="c_phone" value="<?php if(isset($c_phone)){echo $c_phone;}  ?>"  />
           
         </div>
         <div class="form-group">
           <label for="clientName" >Primary Email</label>
           
           
-            <input type="disable" class="form-control"  name="clientName" value="<?php if(isset($c_email)){echo $c_email;}  ?>" disabled />
+            <input type="text" class="form-control"  tabindex="5" name="email" value="<?php if(isset($c_email)){echo $c_email;}  ?>"  />
           
          <!--/form-group-->
         </div>
@@ -290,19 +302,19 @@ if( $or_id= mysqli_query($conn, $q2)){
          <label for="orderDate" >Last Name</label>
          
              
-            <input type="text" class="form-control" id="orderDate" name="orderDate"  value="<?php if(isset($c_lname)){echo $c_lname;}  ?>" disabled />
+            <input type="text" class="form-control" tabindex="2" id="orderDate" name="c_lname"  value="<?php if(isset($c_lname)){echo $c_lname;}  ?>"  />
           
         </div>
          <!--/form-group-->
        <div class="form-group">
-                            <label>Mobile Phone</label><span style="color: red;">*</span>
-                            <input type="text" name="mobile_phone" class="form-control" value="<?php if(isset($c_altnum)){echo $c_altnum;}  ?>" disabled />
+                            <label>Mobile Phone</label>
+                            <input type="text" name="mobile_phone" tabindex="4" class="form-control" value="<?php if(isset($c_altnum)){echo $c_altnum;}  ?>"  />
                         </div>
           <div class="form-group">
           <label for="clientName">Date Of Birth</label>
           
           
-            <input type="text" class="form-control"  name="clientName" value="<?php if(isset($c_dob)){echo $c_dob;}  ?>" disabled />
+            <input type="text" class="form-control "  tabindex="6" name="dob" value="<?php if(isset($c_dob)){echo $c_dob;}  ?>"  />
           
          <!--/form-group-->
         </div>
@@ -312,28 +324,33 @@ if( $or_id= mysqli_query($conn, $q2)){
       <div class="col-md-6">
                           
                         <div class="form-group">
-                            <label>SSN</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control" value="<?php if(isset($c_ssn)){echo getTruncatedCCNumber($c_ssn) ;}  ?>" name="street" disabled />
+                            <label>SSN</label>
+                            <input type="text" name="ssn"  tabindex="7"value="<?php if(isset($c_ssn)){echo $c_ssn;}  ?>" class="form-control " />
                         </div>
                           </div>
                             <div class="col-md-6">
                         <div class="form-group">
                             <label>Driving Licence</label><span style="color: red;"></span>
-                            <input type="text" class="form-control" value="<?php if(isset($DL)){echo $DL;}  ?>" name="city"  disabled />
+                            <input type="text" tabindex="8" class="form-control " value="<?php if(isset($DL)){echo $DL;}  ?>" name="dl"   />
                         </div>
                   
     
                       </div>
       <div class="col-md-6">
                           
+ <div class="form-group">
+                            <label>Driving License Expired</label>
+                            <input type="text" class="form-control " tabindex="9"value="<?php if(isset($DLE)){echo $DLE;}  ?>" name="dl_exp"  />
+                        </div>
+
                         <div class="form-group">
-                            <label>Street</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control" value="<?php if(isset($c_strt)){echo $c_strt;}  ?>" name="street" disabled />
+                            <label>Street</label>
+                            <input type="text" class="form-control" tabindex="11" value="<?php if(isset($c_strt)){echo $c_strt;}  ?>" name="street"  />
                         </div>
                           
                         <div class="form-group">
-                            <label>City</label><span style="color: red;">*</span>
-                            <input type="text" class="form-control" value="<?php if(isset($c_city)){echo $c_city;}  ?>" name="city"  disabled />
+                            <label>City</label>
+                            <input type="text" class="form-control" tabindex="13" value="<?php if(isset($c_city)){echo $c_city;}  ?>" name="city"   />
                         </div>
                   
     
@@ -341,24 +358,30 @@ if( $or_id= mysqli_query($conn, $q2)){
                       
                       
                       <div class="col-md-6">
-                         
+                          <div class="form-group">
+                            <label>Driving License State</label>
+                            <input type="text" class="form-control" tabindex="10" value="<?php if(isset($DLS)){echo $DLS;}  ?>" name="dl_state"  />
+                        </div>
                         <div class="form-group">
-                            <label>Zip Code</label><span style="color: red;">*</span>
-                            <input type="text" name="zip_code" value="<?php if(isset($c_zip)){echo $c_zip;}  ?>" class="form-control" disabled />
+                            <label>Zip Code</label>
+                            <input type="text" name="zip_code" tabindex="12" value="<?php if(isset($c_zip)){echo $c_zip;}  ?>" class="form-control "  />
                         </div>
                           
                         <div class="form-group">
-                            <label>State</label><span style="color: red;">*</span>
-                            <input type="text" name="state" value="<?php if(isset($c_state)){echo $c_state;}  ?>" class="form-control" disabled />
+                            <label>State</label>
+                            <input type="text" name="state" tabindex="14" value="<?php if(isset($c_state)){echo $c_state;}  ?>" class="form-control "  />
+                            <input type="hidden" class="form-control "  name="cus_id" value="<?php  echo $c_id ;?>"/>
                         </div>
-                          
+                             
+                       
                       </div>
+                      
 </div>
 </div>
               <!-- /.card-body -->
             </div>
 
-
+ 
          <!--/form-group-->       
         
 
@@ -384,7 +407,7 @@ $productSqlp = mysqli_query($conn,"SELECT * FROM providers");
 $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
 ?>
 <div class="col-lg-12">
-  <form method="POST" action="" target="_self" id="submitw">
+  <!-- <form method="POST" action=""  id="submitw"> -->
 <div class="card card-olive
 ">
               <div class="card-header">
@@ -408,7 +431,7 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
             <div class="form-group">
           <label for="clientName">Current provider</label>
           
-          <input type="hidden" class="form-control"  name="cus_id" value="<?php  echo $c_id ;?>" />
+          <!-- <input type="hidden" class="form-control"  name="cus_id" value="</?php  echo $c_id ;?>" /> -->
     <select class="form-control" name="Current_pro"  >
                     <option value="<?php if(isset($curr_pro)){echo $curr_pro;}  ?>"><?php if(isset($curr_pro)){echo $curr_pro;}  ?></option>
                     <?php
@@ -442,10 +465,18 @@ $productSqlls = mysqli_query($conn,"SELECT * FROM lead_source");
         </div>
 
           </div>
-           <div class="col-4"><div class="form-group">
+          
+                 <div class="col-4"><div class="form-group">
            
                       <label for="clientName">Assigned To</label>
-                      <input type="text" class="form-control" value="<?php if(isset($asgn)){echo $asgn;}  ?>" name="Assigned_To"  />
+                      <select class="form-control" name="Assigned_To"  >
+                    <option value="<?php if(isset($asgn)){echo $asgn;}  ?>"><?php if(isset($asgn)){echo $asgn;}  ?></option>
+                   <option value="Jason">Jason</option>
+                   <option value="Jason">Jared</option>
+                    <option value="Jason">Fahad</option>
+                     <option value="Jason">Feeha</option>
+                  </select>
+                      
                  
                   </div> 
                 </div>
@@ -463,7 +494,7 @@ function lead_status_edit($output)
 { 
  $servername = "localhost";
     $username = "root";
-    $password = "";
+   $password = "QJb4yhZzNG4CwGKJ";
     $dbname = "crm";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
 
@@ -542,7 +573,7 @@ else{
   <hr><hr>
 <div class="row" style="padding: 0rem 0rem ; background-color:#; margin: 0rem 0rem;  ">
 <input type="hidden" value="<?php echo $ordeids; ?>" name="orders_id[]" class="orders_id">
-<input type="hidden" value="<?php echo $leadids; ?>" name="leads_id[]" class="leads_id" id="leads_id">
+<input type="hidden" value="<?php echo $leadids; ?>" name="leads_id[]" class="leads_id" >
 <input type="hidden" value="<?php echo $ids; ?>" name="serv_id[]" class="serv_id">
          <div class="col-3"><label> Offer Provider </label></div>
        <div class="col-3"><label>Offer Service</label> </div>
@@ -576,7 +607,7 @@ else{
           </select>
         </div>
         <div class="col-3">
-          <input type="date" value="<?php echo $sal_date; ?>" name="up_sale_date[]" class="form-control up_sale_date" disabled/>
+          <input type="date" value="<?php echo $sal_date; ?>" name="up_sale_date[]" class="form-control up_sale_date" />
         </div>
 
  </div>
@@ -592,21 +623,21 @@ else{
   <div class="row" style="padding-bottom: 1rem ;  ">
 
         <div class="col-3">
-          <input type="date" value="<?php echo  $appo_date; ?>" name="up_app_date[]" class="form-control up_app_date" disabled/>
+          <input type="date" value="<?php echo  $appo_date; ?>" name="up_app_date[]" class="form-control up_app_date" />
         </div>
      
     
         <div class="col-3">
-           <input type="time" value="<?php echo $appo_time; ?>" name="up_app_time[]" class="form-control up_app_time" disabled />
+           <input type="text" value="<?php echo $appo_time; ?>" name="up_app_time[]" class="form-control up_app_time"  />
         </div>
      
     
         <div class="col-3">
-           <input type="text" value="<?php echo $account; ?>" name="up_account[]" class="form-control up_account" disabled/>
+           <input type="text" value="<?php echo $account; ?>" name="up_account[]" class="form-control up_account" />
         </div>
 
          <div class="col-3">
-            <input type="text" class="form-control up_Confirmation_num" value="<?php echo $confom; ?>" name="up_confirmation_num[]"  disabled/>
+            <input type="text" class="form-control up_Confirmation_num" value="<?php echo $confom; ?>" name="up_confirmation_num[]"  />
         </div>
  </div>
  <hr>
@@ -636,7 +667,7 @@ else{
   
 <div class="row" style="padding: 0rem 0rem ; background-color:#; margin: 0rem 0rem;  ">
 <input type="hidden" value="<?php echo $ordeids; ?>" name="orders_id[]" class="orders_id">
-<input type="hidden" value="<?php echo $leadids; ?>" name="leads_id" class="leads_id" id="leads_id">
+<input type="hidden" value="<?php echo $leadids; ?>" name="leads_id" class="leads_id" id="a">
 <input type="hidden" value="<?php echo $ids; ?>" name="serv_id[]" class="serv_id">
          <div class="col-3"><label> Offer Provider </label></div>
        <div class="col-3"><label>Offer Service</label> </div>
@@ -686,12 +717,12 @@ else{
   <div class="row" style="padding-bottom: 1rem ;  ">
 
         <div class="col-3">
-          <input type="date" value="<?php echo date('Y-m-d',strtotime($appo_date)); ?>" name="up_app_date[]" class="form-control up_app_date" required pattern="\Y{4}-\m{2}-\d{2}"/>
+          <input type="date" value="<?php echo $appo_date; ?>" name="up_app_date[]" class="form-control up_app_date" />
         </div>
      
     
         <div class="col-3">
-           <input type="time" value="<?php echo date('h:i:s',strtotime($appo_time));  ?>" name="up_app_time[]" class="form-control up_app_time" />
+           <input type="text" value="<?php echo $appo_time; ?>" name="up_app_time[]" class="form-control up_app_time" />
         </div>
      
     
@@ -724,6 +755,62 @@ else{
                   <i class="fas fa-plus"></i>add</button>
                 </div>
       
+         <div class="card card-warning">
+             <div class="card-header">
+               <h3 class="card-title">Sale Elements</h3>
+               <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+             <i class="fas fa-minus"></i>
+           </button>
+           
+          </div>
+              </div>
+              <div class="card-body">
+           <div class="row">
+
+            <div class="col-3"> Offer Provider </div>
+          <div class="col-3">Offer Service </div>
+           <div class="col-3"> Status </div>
+            <div class="col-3"> Sale Date </div>
+           </div>
+           
+        <div class="row">
+
+        <div class="col-3">
+        <select name="provider_unit[]" class="form-control provider_unit"><option value="None">None</option><?php echo providers($connect); ?></select></div>
+
+
+       <div class="col-3"><select name="service_unit[]" class="form-control service_unit" data-placeholder="Select a service_unit" style="width: 100%;"><option value="None">None</option><?php echo service($connect); ?></select></div>
+
+        <div class="col-3"><select name="status_unit[]" class="form-control status_unit"><option value="None">None</option><?php echo lead_status($connect); ?></select></div>
+
+        <div class="col-3"><input type="date" name="sale_date[]" class="form-control sale_date" /></div>
+
+        </div>
+
+        <div class="row">
+
+        
+           <div class="col-3"> Appt Date</div>
+            <div class="col-3">Appt Time</div>
+           <div class="col-3">Account #</div>
+            <div class="col-3">Confirmation #  </div>
+             </div>
+
+             <div class="row">
+          <div class="col-3"><input type="date" name="app_date[]" class="form-control app_date" /></div>
+               
+           
+          <div class="col-3"><input type="text" name="app_time[]" class="form-control app_time" /></div>
+             
+             
+          <div class="col-3"><input type="text" name="account[]" class="form-control account" /></div>
+
+          <div class="col-3"><input type="text" name="Confirmation_num[]" class="form-control Confirmation_num" /></div>
+
+           </div>
+ </div>
+  </div>
          
 
          <!--  </?php include ('leadtable.php');  ?>  -->
@@ -783,7 +870,7 @@ else{
                   <tbody id="comment_detail">
 <?php
 
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 $query = "SELECT `id`, `lead_id`, `comment`, `updated_user`, `date_time` FROM `lead_comment` WHERE lead_id = $lead_get_id ";
 
 $statement = $connect->prepare($query);
@@ -861,7 +948,7 @@ echo $output;
                   <tbody id="comment_detail">
 <?php
 
-$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 $query = "SELECT `id`, `lead_id`, `files`, `files_types`, `upload_on` FROM `lead_files` WHERE  lead_id = $lead_get_id ";
 
 $statement = $connect->prepare($query);
@@ -918,7 +1005,23 @@ echo $output;
 </div>
 </div>
 
+  <div class="col-lg-6">
+                    <div class="btn-group w-100 text-center">
+                      
+                        
+                        <div class="upload text-center">
+       <!--  <a onclick="select_file()" class="pure-button"></a> -->
+     <input id="image" type="file" name="files[]" style="display: none;" size="60"  multiple=""> 
+     <label for="image" class="btn btn-block btn-success btn-lg"><i class="fas fa-plus"></i><span>No file chosen</span></label>
+     <!-- <button class="pure-button pure-button-primary" id="image" type="file" name="files[]" multiple=""><i class="fas fa-times-circle"></i>
+                        <span> upload</span>
+                      </button> -->
+      </div>
+      
+      
 
+                    </div>
+                  </div>
 
           
 <!-- <button type="submit" name="submit" class="btn btn-block btn-success btn-lg">save</button>  -->
@@ -944,53 +1047,7 @@ echo $output;
 
 <section>
  
-  <div class="container-fluid">
-    
-<div class="row">
-          <div class="col-md-12">
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title">Upload File
-</h3>
-              </div>
-              <div class="card-body text-center">
-                <div  class="row">
-                  
-                  <form class="pure-form"  enctype="multipart/form-data" method="post"  >
-
-                  <div class="col-lg-6">
-                    <div class="btn-group w-100 text-center">
-                      
-                        
-                        <div class="upload text-center">
-       <!--  <a onclick="select_file()" class="pure-button"></a> -->
-     <input id="image" type="file" name="files[]" style="display: none;" size="60"  multiple=""> 
-     <label for="image" class="btn btn-success col cancel"><i class="fas fa-plus"></i><span>No file chosen</span></label>
-     <!-- <button class="pure-button pure-button-primary" id="image" type="file" name="files[]" multiple=""><i class="fas fa-times-circle"></i>
-                        <span> upload</span>
-                      </button> -->
-      </div>
-      <button class="pure-button pure-button-primary" type="submit" name="btn-upload"><i class="fas fa-times-circle"></i>
-                        <span> upload</span>
-                      </button>
-      
-
-                    </div>
-                  </div>
-
-                </form>
-                  
-                </div>
-               
-              </div>
-              <!-- /.card-body -->
-              
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-    
-  </div>
+ 
 </section>
  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
@@ -1034,49 +1091,12 @@ echo $output;
 
  
 
-if(isset($_POST['btn-upload']))
-                {
+// if(isset($_POST['btn-upload']))
+//                 {
                   
-                  for($i=0; $i < count($_FILES['files']['name']); $i++ )
-                    {
-                      $file = $_FILES['files']['name'][$i];
-                      $tmp_name = $_FILES['files']['tmp_name'][$i];
-                      $size = $_FILES['files']['size'][$i];
-                      $type = $_FILES['files']['type'][$i];
-                      
-                    //  $maxSize = 1024 * 2000;
-                      $accepted = array("jpeg","JPEG","jpg","JPG","png","PNG","gif","GIF","txt","pdf","*","mp3","wma","wav","avi", "mpeg");
-                      
-                      $imagefolder = 'upload/';
+                  
 
-                      if(! in_array(pathinfo($file, PATHINFO_EXTENSION), $accepted))
-                      {
-                          echo '<script type="text/javascript">
-                              toastr.error("File is Not An Acceptable File Type ...")
-                            </script>';
-                        
-                        
-                      }
-                      else
-                      {
-                        move_uploaded_file($tmp_name, $imagefolder.$file);
-                        
-                        $insert_file = "INSERT INTO `lead_files`(`lead_id`, `files`, `files_types`) VALUES ('$lead_get_id','$file', '$type' )";
-                        
-                        $result_file = mysqli_query($conn,$insert_file);
-                        
-                        if($result_file){
-                
-                          echo '<script type="text/javascript">
-                              toastr.success("File Uploaded Successfully ...")
-                            </script>';
-                            
-                        }
-
-                      }
-                    }
-
-                  }
+//                   }
 
 
 
@@ -1099,7 +1119,8 @@ if(isset($_POST['btn-upload']))
 
  if (isset($_POST['btnsub'])) {
   
-    //echo '<script>alert("Welcome to Geeks for Geeks")</script>'; 
+    //echo '<script>alert("Welcome to Geeks for Geeks")</script>';
+    
 
 
  $count=count($_POST["serv_id"]);
@@ -1121,6 +1142,41 @@ else {
                       }
  }
 
+   
+
+$c_id = $_POST['cus_id'];
+
+$c_fname = trim($_POST['c_fname']);
+    $c_lname = trim($_POST['c_lname']);
+$c_phone = trim($_POST['c_phone']);
+
+    $email = trim($_POST['email']);
+    $dob = trim($_POST['dob']);
+$mobile_phone = trim($_POST['mobile_phone']);
+$street = trim($_POST['street']);
+        $zip_code = trim($_POST['zip_code']);
+        $city = trim($_POST['city']);
+        $state = trim($_POST['state']);
+        $ssn = trim($_POST['ssn']);
+        $dl = trim($_POST['dl']);
+        $dl_exp = trim($_POST['dl_exp']);
+        $dl_state = trim($_POST['dl_state']);
+$lead_sour = $_POST['lead_sour'];
+$Current_pro = $_POST['Current_pro'];
+
+ $sql = "UPDATE `customer` SET `first_name`='$c_fname',`last_name`='$c_lname',`phone`='$c_phone',`alt_num`='$mobile_phone',`email`='$email',`DOB`='$dob',`SSN`='$ssn',`Driving_license`='$dl',`Driving_license_Expired`='$dl_exp',`Driving_License_State`='$dl_state',`street`='$street',`city`='$city',`state`='$state',`zip_code`='$zip_code',`current_provider`='$Current_pro',`Lead_Source`='$lead_sour' where id ='$c_id'";
+if (mysqli_query($conn, $sql)) {}
+
+$Assigned_To = $_POST['Assigned_To'];
+$Description = $_POST['Description'];
+
+echo $qaa ="UPDATE `orders` SET `Assigned_To`='$Assigned_To',`Description`='$Description' WHERE `id` ='$ordeids' ";
+
+
+  if (mysqli_query($conn, $qaa)) {
+    
+
+  }
 // $led_idd = $_POST['leads_id'];
 $comt = $_POST['comment'];
 $qa ="INSERT INTO `lead_comment`( `lead_id`, `comment`, `updated_user`)  VALUES ('$lead_get_id','$comt','$u_namse' ) ";
@@ -1129,15 +1185,14 @@ $qa ="INSERT INTO `lead_comment`( `lead_id`, `comment`, `updated_user`)  VALUES 
   if (mysqli_query($conn, $qa)) {if (1==1) {
 echo "
 <script>
- toastr.success('Lead updated Successfully ...') 
-toastr.options.onHidden = function() { window.location.assign('view_lead.php?leadid=".$lead_get_id."') }
-
-
+ 
+window.location.assign('leadlist.php?w=0')
 
 </script>";
 //header("Location:lead_table.php");
 }}
-
+// window.location.assign('leadlist.php?w=0') 
+// 
 else {
         echo "Error: " . $qa . "<br>" . mysqli_error($conn);
                       
@@ -1232,7 +1287,7 @@ html += '<div class="card card-warning">';
         html += '<div class="row">';
 
         
-           html += '<div class="col-3"> Appt Date</div>';
+           html += '<div class="col-3">Appt Date</div>';
             html += '<div class="col-3">Appt Time</div>';
            html += '<div class="col-3">Account #</div>';
             html += '<div class="col-3">Confirmation #  </div>';
@@ -1242,7 +1297,7 @@ html += '<div class="card card-warning">';
           html += '<div class="col-3"><input type="date" name="app_date[]" class="form-control app_date" /></div>';
                
             // Appointment Time
-          html += '<div class="col-3"><input type="time" name="app_time[]" class="form-control app_time" /></div>';
+          html += '<div class="col-3"><input type="text" name="app_time[]" class="form-control app_time" /></div>';
              
              //Account Number
           html += '<div class="col-3"><input type="text" name="account[]" class="form-control account" /></div>';
@@ -1266,26 +1321,26 @@ html += '<div class="card card-warning">';
         $(this).closest('.whole').remove();
        });
  
-    $('form').on('submit', function(event){
-     
+    $('#submitw').on('submit', function(event){
+     //event.preventDefault();
       var error = '';
 
 
-      $('.serv_id').each(function(){
-       var count = 1;
+      // $('.serv_id').each(function(){
+      //  var count = 1;
       
-       count = count + 1;
-      });
-      $('.orders_id').each(function(){
-       var count = 1;
+      //  count = count + 1;
+      // });
+      // $('.orders_id').each(function(){
+      //  var count = 1;
       
-       count = count + 1;
-      });
-      $('.leads_id').each(function(){
-       var count = 1;
+      //  count = count + 1;
+      // });
+      // $('.leads_id').each(function(){
+      //  var count = 1;
       
-       count = count + 1;
-      });
+      //  count = count + 1;
+      // });
        
 
       //Provider Value
@@ -1368,7 +1423,7 @@ html += '<div class="card card-warning">';
        count = count + 1;
       });
 
-      $('.Confirmation_num').each(function(){
+      $('.confirmation_num').each(function(){
        var count = 1;
        // if($(this).val() == '')
        // {
@@ -1377,21 +1432,29 @@ html += '<div class="card card-warning">';
        // }
        count = count + 1;
       });
-
-      var form_data = $(this).serialize();
+// var form = $(this);
+//      //var serializedData = new FormData(this);
+//  var serializedData = $form.serialize();
+var serializedData = new FormData(this);
+ //alert(error);
       if(error == '')
       {
+       // alert(form_data);
        $.ajax({
         url:"update_data.php",
         method:"POST",
-        data:form_data,
+        data:serializedData,
         success:function(data)
-        {//console.log(data);
+        {console.log(data);
+          //alert(data);
          toastr.success("Order Added Successfully ...")
-        toastr.options.onHidden = function() { window.locationlocation.reload() }
+        //toastr.options.onHidden = function() { window.locationlocation.reload() }
         //console.log(data);
 
-        }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
        });
       }
       else
@@ -1401,24 +1464,24 @@ html += '<div class="card card-warning">';
     });
  
  
-  /* variables */
-  var preview = $('img');
-  var status = $('.status');
-  var percent = $('.percent');
-  var bar = $('.bar');
+  // /* variables */
+  // var preview = $('img');
+  // var status = $('.status');
+  // var percent = $('.percent');
+  // var bar = $('.bar');
 
-  /* only for image preview */
-  $("#image").change(function(){
-    preview.fadeOut();
+  // /* only for image preview */
+  // $("#image").change(function(){
+  //   preview.fadeOut();
 
-    /* html FileRender Api */
-    var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.getElementById("image").files[0]);
+  //    html FileRender Api 
+  //   var oFReader = new FileReader();
+  //   oFReader.readAsDataURL(document.getElementById("image").files[0]);
 
-    oFReader.onload = function (oFREvent) {
-      preview.attr('src', oFREvent.target.result).fadeIn();
-    };
-  });
+  //   oFReader.onload = function (oFREvent) {
+  //     preview.attr('src', oFREvent.target.result).fadeIn();
+  //   };
+  // });
 
 
 
@@ -1463,8 +1526,38 @@ html += '<div class="card card-warning">';
   }
 
 </script>
+<?php 
 
+if ($dep_id == "3") { 
+echo '<script type="text/javascript">
+$(document).ready(function() {
+  var $form = $(this);
+      var $inputs = $form.find("input, select, button, textarea");
+      $inputs.prop("disabled", true);
+      $( "#search" ).prop( "disabled", false );
+      $( "#searchd" ).prop( "disabled", false );
+      });
+</script> ';
+}
+elseif ($dep_id == "11" or $dep_id == "1" or $dep_id == "4") { 
+echo '<script type="text/javascript">
+$(document).ready(function() {
+  var $form = $(this);
+      var $inputs = $form.find("input, select, button, textarea")
+      $inputs.prop("disabled", false)
 
+      });
+</script> ';
+
+}
+else{
+
+echo '<script type="text/javascript">
+      window.location.assign("500.html")
+      
+</script> ';
+}
+  ?>
 
     </body>
 </html>

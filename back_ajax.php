@@ -8,7 +8,7 @@ session_start();
  echo $_SESSION['u_id'];    
 echo $_SESSION['u_name'];
 
- $connect = new PDO("mysql:host=localhost;dbname=crm", "root", "");
+ $connect = new PDO("mysql:host=localhost;dbname=crm", "root", "QJb4yhZzNG4CwGKJ");
 
  
  $query ="SELECT service_offered.lead_id,customer.first_name,customer.phone,service_offered.provi_name,service_offered.status,service_offered.sale_date,service_offered.opp_time FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id WHERE service_offered.opp_date ='".date('Y-m-d')."'";

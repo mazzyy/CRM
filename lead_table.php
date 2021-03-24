@@ -3,15 +3,19 @@ session_start();
  $user_id = $_SESSION['u_id'];    
  $user_name = $_SESSION['u_name'];
  $dep_id=  $_SESSION['dep_id'];
-if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4 ) { 
+if ( $dep_id == 1 or $dep_id == 3 or $dep_id == 4  or $dep_id == 11) { 
 
- }else{
+ }
+
+
+ else{
 
  echo '<script type="text/javascript">
        window.location.assign("500.html")
        
 </script> ';
  }
+
 
 ?>
 <!DOCTYPE html>
@@ -81,14 +85,17 @@ $searchlead = $num = $em = $sd = $ad ="";
 
             if(isset($_POST['searchlead'])){
     
-            $searchlead = mysqli_real_escape_string($conn, htmlspecialchars($_POST['searchlead']));
+           $searchlead = mysqli_real_escape_string($conn, htmlspecialchars($_POST['searchlead']));
+           
+           $searchlead = str_replace(' ', '', $searchlead);
+           // var_dump($searchlead);
   // $num = mysqli_real_escape_string($conn, htmlspecialchars($_POST['phone']));
   // $em = mysqli_real_escape_string($conn, htmlspecialchars($_POST['email']));
   // $sd = mysqli_real_escape_string($conn, htmlspecialchars($_POST['sal_date']));
   // $ad = mysqli_real_escape_string($conn, htmlspecialchars($_POST['appo_date']));
 // $sch_query ="SELECT service_offered.lead_id, lead.cu_id, tbl_users.u_name, service_offered.status,service_offered.sale_date,service_offered.opp_date, customer.first_name ,customer.last_name,customer.phone,customer.alt_num FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id WHERE ";
 
- $sch_query="SELECT service_offered.lead_id, lead.cu_id, tbl_users.u_name, service_offered.status,service_offered.sale_date,service_offered.opp_date, customer.first_name ,customer.last_name,customer.phone,customer.alt_num FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id where `sale_date`='$searchlead' or `opp_date`='$searchlead' or `u_name`= '$searchlead' or `status`='$searchlead' or `phone`='$searchlead' or `alt_num`='$searchlead' or `first_name`='$searchlead' or `last_name`='$searchlead'";
+ $sch_query="SELECT service_offered.lead_id, lead.cu_id, tbl_users.u_name, service_offered.status,service_offered.sale_date,service_offered.opp_date, customer.first_name ,customer.last_name,customer.phone,customer.alt_num,service_offered.date FROM service_offered INNER JOIN lead ON service_offered.lead_id = lead.id INNER JOIN tbl_users ON lead.u_id = tbl_users.u_id INNER JOIN customer on lead.cu_id = customer.id where `sale_date`='$searchlead' or `opp_date`='$searchlead' or `u_name`= '$searchlead' or `status`='$searchlead' or `phone`='$searchlead' or `alt_num`='$searchlead' or `first_name`='$searchlead' or `last_name`='$searchlead' order by lead_id DESC";
 
   $sch_result1 = mysqli_query($conn,$sch_query);
      
@@ -120,7 +127,8 @@ else {
                       <th>Last Name</th>
                       <th>Phone Num #</th>
                       <th>Alt Phone Num #</th>
-                     
+                     <th>Sale date</th>
+                     <th>date</th>
                      
                     </tr>
                   </thead>
@@ -135,12 +143,23 @@ $lead_id = $row['0'];
 $cus_id = $row['1'];
 $u_name = $row['2'];
 $satus = $row['3'];
-$sale_date = $row['4'];
+$saldate = $row['4'];
+if (empty($saldate)) {
+  $sale_date="";
+}
+else{
+  $sale_date= date("m-d-Y", strtotime($saldate));
+}
+   
 $opp_date = $row['5'];
 $fname = $row['6'];
 $lname = $row['7'];
 $num = $row['8'];
 $alt_num = $row['9'];
+$datess = $row['10'];
+
+$dates= date("m-d-Y", strtotime($datess));
+
 ?>
  
                       
@@ -242,6 +261,17 @@ $alt_num = $row['9'];
                 </a></td>
                       <td><span class="badge badge-success" style="color: ;background-color:#ff851b; "><?php echo $satus?></span></td>
 
+
+ <?php  }   
+                    elseif ($satus =='Pending-Activation') {
+                          ?>
+
+
+<td><a href="view_lead.php?leadid=<?php echo $lead_id; ?>" class="btn btn-app" style="color: ;background-color:#ff851b; ">
+                  <span class="badge bg-succes.$lead_id.s"></span>
+                  <i class="fas fa-barcode"></i> View Details
+                </a></td>
+                      <td><span class="badge badge-success" style="color: ;background-color:#ff851b; "><?php echo $satus?></span></td>
                    <?php  }   
                     else{
                     
@@ -260,7 +290,8 @@ $alt_num = $row['9'];
                       <td><?php echo $lname; ?></td>
                       <td><?php echo $num; ?></td>
                       <td><?php echo $alt_num; ?></td>
-
+                      <td><?php echo $sale_date; ?></td>
+                      <td><?php echo $dates; ?></td>
                        
         </tr> 
 
